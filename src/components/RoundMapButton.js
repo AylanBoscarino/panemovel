@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Button } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 
 export default class RoundMapButton extends Component {
   render() {
     return (
-      <Button
-      style={styles.roundMapButton}
-      {...this.props}
-      />
+      <View style={{...styles.roundMapButton, ...this.props.style}} >
+        <TouchableOpacity >
+          <Image style={styles.buttonIcon} source={this.props.image} />
+        </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   roundMapButton: {
-    borderRadius: 0.5,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
     backgroundColor: '#fff',
-    color: 'black',
+    borderRadius: 100,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 0.5,
+    position: 'absolute',
+  },
+  buttonIcon: {
+    width: 30,
+    height: 30,
   },
 });

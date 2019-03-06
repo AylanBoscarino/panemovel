@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.airbnb.android.react.maps.MapsPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 
 // public class MainApplication extends Application implements ReactApplication {
 
@@ -73,7 +74,8 @@ public class MainApplication extends NavigationApplication {
         // No need to add RnnPackage and MainReactPackage
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
-            new MapsPackage()
+            new MapsPackage(),
+            new RNFusedLocationPackage()
         );
     }
   

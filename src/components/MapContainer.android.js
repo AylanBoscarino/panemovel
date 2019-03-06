@@ -20,22 +20,23 @@ export default class MapContainer extends Component {
     };
   }
 
-  async componentDidMount() {
-    const grantedPermission = await fineLocation();
-    this.setState({
-      grantedPermission,
-    });
+  componentDidMount() {
+    fineLocation().then(grantedPermission => {
+      this.setState({
+        grantedPermission,
+      });
 
-    if (grantedPermission) {
-      navigator.geolocation.getCurrentPosition(position =>
-        this.setState(prevstate => ({
-          locationMock: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
-        }))
-      );
-    }
+      if (grantedPermission) {
+        Geolocation.getCurrentPosition(position => {
+          this.setState({
+            locationMock: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            },
+          });
+        });
+      }
+    });
   }
 
   render() {

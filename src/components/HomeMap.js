@@ -12,9 +12,10 @@ export default class HomeMap extends Component {
       <MapContainer>
         {({ latitude, longitude }) => (
           <View style={styles.container}>
+            {console.log({ latitude, longitude })}
             <MapView
               style={styles.map}
-              initialRegion={{
+              region={{
                 latitude,
                 longitude,
                 latitudeDelta: 0.0922,
@@ -22,7 +23,7 @@ export default class HomeMap extends Component {
               }}>
               <PositionMarker coordinate={{ latitude, longitude }} />
             </MapView>
-            <RoundMapButton title="OK" />
+            <RoundMapButton style={styles.locationButton} image={require('../../asstes/my_location.png')} />
           </View>
         )}
       </MapContainer>
@@ -39,5 +40,9 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  locationButton: {
+    left: '80%',
+    top: '80%',
   },
 });
