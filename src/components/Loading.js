@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-export default class Home extends Component {
+export default class Loading extends Component {
   render() {
     return (
       <View>
-        <Text> Mãe to no androide! </Text>
+        <Text> Carregando </Text>
       </View>
     );
   }
