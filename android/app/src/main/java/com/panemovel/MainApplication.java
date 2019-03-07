@@ -3,6 +3,7 @@ package com.panemovel;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,7 +30,7 @@ import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 //     @Override
 //     protected List<ReactPackage> getPackages() {
 //       return Arrays.<ReactPackage>asList(
-//           new MainReactPackage()
+//           new MainReactPackage(),
 //       );
 //     }
 
@@ -75,7 +76,9 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new MapsPackage(),
-            new RNFusedLocationPackage()
+            new RNFusedLocationPackage(),
+            new ReactNativeConfigPackage()
+            
         );
     }
   

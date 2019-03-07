@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import Config from 'react-native-config';
 
 import Loading from './Loading';
 import fineLocation from '../permissions/fineLocation';
@@ -21,6 +22,7 @@ export default class MapContainer extends Component {
   }
 
   componentDidMount() {
+    console.log({gmk: Config.GOOGLE_MAPS_API_KEY});
     fineLocation().then(grantedPermission => {
       this.setState({
         grantedPermission,

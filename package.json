@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.58.6",
+    "react-native-config": "^0.11.7",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-maps": "^0.23.0",
     "react-native-navigation": "^2.13.1"
