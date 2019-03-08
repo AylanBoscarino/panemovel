@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapViewDirections  from 'react-native-maps-directions';
 
 import MapContainer from './MapContainer';
 import PositionMarker from './PositionMarker';
@@ -13,23 +14,22 @@ export default class HomeMap extends Component {
   render() {
     return (
       <MapContainer>
-        {({ latitude, longitude }, nearbyStations) => (
+        {(coordinates, nearbyStations, spotlightStation, changeSpotlightStation) => (
           <View style={styles.container}>
             <MapView
               style={styles.map}
               region={{
-                latitude,
-                longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                ...coordinates,
+                latitudeDelta: 0.0122,
+                longitudeDelta: 0.0121,
               }}>
-              <PositionMarker coordinate={{ latitude, longitude }} />
+              <PositionMarker coordinate={coordinates} />
               {nearbyStations && nearbyStations.map((station, index) => (
-                <StationMarker key={index} station={station} />
+                <StationMarker key={index} index={index} station={station} onPress={changeSpotlightStation}/>
               ))}
             </MapView>
             <LocationButton style={styles.locationButton}/>
-            {nearbyStations && <ClosestStation station={nearbyStations[0]} />}
+            {nearbyStations && <ClosestStation station={nearbyStations[spotlightStation]} />}
           </View>
         )}
       </MapContainer>

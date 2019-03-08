@@ -13,7 +13,7 @@ export default class ClosestStation extends Component {
     const { station } = this.props;
     return (
       <ClosestStationContainer
-        photoReference={station && station.photos[0].photo_reference}>
+        photoReference={station.photos && station.photos[0].photo_reference}>
         {photo => (
           <TouchableNativeFeedback>
             <View style={styles.container}>
@@ -33,10 +33,11 @@ export default class ClosestStation extends Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    width: '100%',
+    width: '80%',
     height: 50,
     backgroundColor: '#fff',
     top: '90%',
+    left: '10%',
     flex: 1,
     flexDirection: 'row',
     borderRadius: 10,

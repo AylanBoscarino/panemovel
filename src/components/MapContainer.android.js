@@ -20,6 +20,7 @@ export default class MapContainer extends Component {
       },
       nearbyStations: null,
       watchId: null,
+      spotlightStation: 0,
     };
   }
 
@@ -55,9 +56,9 @@ export default class MapContainer extends Component {
         }, {
           enableHighAccuracy: true,
           showLocationDialog: true,
-          fastestInterval: 999,
-          interval: 1000,
-          distanceFilter: 0,
+          fastestInterval: 1000,
+          interval: 3000,
+          distanceFilter: 1,
         });
         this.setState({ watchId });
       }
@@ -69,11 +70,17 @@ export default class MapContainer extends Component {
     Geolocation.stopObserving();
   }
 
+  changeSpotlightStation = (index) => {
+    this.setState({
+      spotlightStation: index,
+    });
+  };
+
   render() {
     const { children } = this.props;
-    const { grantedPermission, location, nearbyStations } = this.state;
+    const { grantedPermission, location, nearbyStations, spotlightStation } = this.state;
     if (grantedPermission === true) {
-      return children(location, nearbyStations);
+      return children(location, nearbyStations, spotlightStation, this.changeSpotlightStation);
     }
 
     if (grantedPermission === false) {
