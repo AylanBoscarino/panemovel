@@ -13,17 +13,12 @@ export default class MapContainer extends Component {
     this.state = {
       grantedPermission: false,
       location: {
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 0,
+        longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      nearbyStations: [
-        {
-          latitude: 0,
-          longitude: 0,
-        },
-      ],
+      nearbyStations: null,
     };
   }
 
@@ -34,12 +29,8 @@ export default class MapContainer extends Component {
         this.state.location.longitude
       );
       const response = await fetch(url);
-      const retrievedStations = await response.json();
-      const nearbyStations = retrievedStations.results.map(station => ({
-        latitude: station.geometry.location.lat,
-        longitude: station.geometry.location.lng,
-      }));
-      this.setState({ nearbyStations });
+      const data = await response.json();
+      this.setState({ nearbyStations: data.results });
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +59,6 @@ export default class MapContainer extends Component {
   render() {
     const { children } = this.props;
     const { grantedPermission, location, nearbyStations } = this.state;
-
     if (grantedPermission === true) {
       return children(location, nearbyStations);
     }

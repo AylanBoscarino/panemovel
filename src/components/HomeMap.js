@@ -4,10 +4,10 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import MapContainer from './MapContainer';
 import PositionMarker from './PositionMarker';
-import RoundMapButton from './RoundMapButton';
+import LocationButton from './LocationButton';
 import StationMarker from './StationMarker';
+import ClosestStation from './ClosestStation';
 
-import locationButtonIcon from '../../asstes/my_location.png';
 
 export default class HomeMap extends Component {
   render() {
@@ -24,14 +24,12 @@ export default class HomeMap extends Component {
                 longitudeDelta: 0.0421,
               }}>
               <PositionMarker coordinate={{ latitude, longitude }} />
-              {nearbyStations.map((stationCoordinates, index) => (
-                <StationMarker key={index} coordinate={stationCoordinates} />
+              {nearbyStations && nearbyStations.map((station, index) => (
+                <StationMarker key={index} station={station} />
               ))}
             </MapView>
-            <RoundMapButton
-              style={styles.locationButton}
-              image={locationButtonIcon}
-            />
+            <LocationButton style={styles.locationButton}/>
+            {nearbyStations && <ClosestStation station={nearbyStations[0]} />}
           </View>
         )}
       </MapContainer>
@@ -50,7 +48,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   locationButton: {
-    left: '80%',
-    top: '80%',
+    position: 'absolute',
+    left: '85%',
+    top: '20%',
   },
 });

@@ -4,14 +4,18 @@ import { Marker } from 'react-native-maps';
 
 export default class StationMarker extends Component {
   render() {
-    console.log(this.props.coordinate)
+    const { station } = this.props;
+    const location = {
+      latitude: station.geometry.location.lat,
+      longitude: station.geometry.location.lng,
+    };
     return (
       <Marker
-        title="Você"
-        description="você está aqui"
+        title={station.name}
+        description={station.vicinity}
         flat={true}
         pinColor="purple"
-        {...this.props}
+        coordinate={location}
       />
     );
   }

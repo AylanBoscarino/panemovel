@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
+    width: 30,
+    height: 30,
     backgroundColor: '#fff',
     borderRadius: 100,
     shadowColor: '#000',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   buttonIcon: {
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
   },
 });
