@@ -13,14 +13,14 @@ export default class ClosestStation extends Component {
     const { station } = this.props;
     return (
       <ClosestStationContainer
-        photoReference={station.photos[0].photo_reference}>
+        photoReference={station && station.photos[0].photo_reference}>
         {photo => (
           <TouchableNativeFeedback>
             <View style={styles.container}>
               {console.log({ photo })}
               <Image style={styles.image} source={{ uri: photo }} />
               <View style={styles.textSpace}>
-                <Text> {station.name} </Text>
+                <Text> {station && station.name} </Text>
               </View>
             </View>
           </TouchableNativeFeedback>

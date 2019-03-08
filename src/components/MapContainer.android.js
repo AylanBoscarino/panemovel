@@ -13,12 +13,13 @@ export default class MapContainer extends Component {
     this.state = {
       grantedPermission: false,
       location: {
-        latitude: 0,
-        longitude: 0,
+        latitude: -42.983068,
+        longitude: -43.3614,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
       nearbyStations: null,
+      watchId: null,
     };
   }
 
@@ -43,7 +44,7 @@ export default class MapContainer extends Component {
       });
 
       if (grantedPermission) {
-        Geolocation.getCurrentPosition(position => {
+        const watchId = Geolocation.watchPosition(position => {
           this.setState({
             location: {
               latitude: position.coords.latitude,
@@ -51,9 +52,21 @@ export default class MapContainer extends Component {
             },
           });
           this.findNearbyStations();
+        }, {
+          enableHighAccuracy: true,
+          showLocationDialog: true,
+          fastestInterval: 999,
+          interval: 1000,
+          distanceFilter: 0,
         });
+        this.setState({ watchId });
       }
     });
+  }
+
+  componentWillUnmount() {
+    Geolocation.clearWatch(this.state.watchId);
+    Geolocation.stopObserving();
   }
 
   render() {
