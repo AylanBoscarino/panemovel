@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import Config from 'react-native-config';
 
 import Loading from './Loading';
 import fineLocation from '../permissions/fineLocation';
+import { urlFindNearbyStations } from '../constants';
 
 export default class MapContainer extends Component {
   constructor(props) {
@@ -12,17 +12,40 @@ export default class MapContainer extends Component {
 
     this.state = {
       grantedPermission: false,
-      locationMock: {
+      location: {
         latitude: 37.78825,
         longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
+      nearbyStations: [
+        {
+          latitude: 0,
+          longitude: 0,
+        },
+      ],
     };
   }
 
+  findNearbyStations = async () => {
+    try {
+      const url = urlFindNearbyStations(
+        this.state.location.latitude,
+        this.state.location.longitude
+      );
+      const response = await fetch(url);
+      const retrievedStations = await response.json();
+      const nearbyStations = retrievedStations.results.map(station => ({
+        latitude: station.geometry.location.lat,
+        longitude: station.geometry.location.lng,
+      }));
+      this.setState({ nearbyStations });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   componentDidMount() {
-    console.log({gmk: Config.GOOGLE_MAPS_API_KEY});
     fineLocation().then(grantedPermission => {
       this.setState({
         grantedPermission,
@@ -31,11 +54,12 @@ export default class MapContainer extends Component {
       if (grantedPermission) {
         Geolocation.getCurrentPosition(position => {
           this.setState({
-            locationMock: {
+            location: {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             },
           });
+          this.findNearbyStations();
         });
       }
     });
@@ -43,10 +67,10 @@ export default class MapContainer extends Component {
 
   render() {
     const { children } = this.props;
-    const { grantedPermission, locationMock } = this.state;
+    const { grantedPermission, location, nearbyStations } = this.state;
 
     if (grantedPermission === true) {
-      return children(locationMock);
+      return children(location, nearbyStations);
     }
 
     if (grantedPermission === false) {
