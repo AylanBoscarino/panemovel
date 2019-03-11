@@ -8,12 +8,18 @@ import LocationButton from './LocationButton';
 import StationMarker from './StationMarker';
 import ClosestStation from './ClosestStation';
 import MapDirections from './MapDirections';
+import { GeolocationState } from '../redux/ducks/geolocation';
+
+export interface FunctionsObject {
+  selectStation: (station: object) => void;
+  createDirection: () => void;
+}
 
 export default class HomeMap extends Component {
   render() {
     return (
       <MapContainer>
-        {(data, functions) => (
+        {(data: GeolocationState, functions: FunctionsObject) => (
           <View style={styles.container}>
             <MapView
               style={styles.map}

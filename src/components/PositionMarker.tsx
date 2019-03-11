@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Marker } from 'react-native-maps';
+import { Marker, LatLng } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
 
-export default class PositionMarker extends Component {
+export interface Props {
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  }
+}
+
+export default class PositionMarker extends Component<Props, any> {
   render() {
     return (
       <Marker
@@ -10,7 +17,7 @@ export default class PositionMarker extends Component {
         description="você está aqui"
         flat={true}
         pinColor="blue"
-        {...this.props}
+        coordinate={this.props.coordinate}
       />
     );
   }

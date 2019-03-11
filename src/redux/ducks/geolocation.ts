@@ -1,7 +1,7 @@
 import Geolocation from 'react-native-geolocation-service';
 
-import fineLocation from '../../permissions/fineLocation';
 import { urlFindNearbyStations } from '../../constants';
+import fineLocation from '../../permissions/fineLocation';
 
 // TYPES
 const GEOLOCATION_GRANT_PERMISSION = 'panemovel/geolocation/grant-permission';
@@ -13,26 +13,51 @@ const GEOLOCATION_FIND_NEARBY_STATIONS =
 const GEOLOCATION_SELECT_STATION = 'panemovel/geolocation/select-station';
 const GEOLOCATION_CREATE_DIRECTION = 'panemovel/geolocation/create-direction';
 
+interface Action {
+  type: string;
+  payload: any;
+}
+
+type Dispatch = (action: Action) => void;
+
+export interface GeolocationState {
+  direction: {
+    isGivingDirection: boolean,
+    latitude: number,
+    longitude: number,
+  };
+  grantedPermission: boolean;
+  location: {
+    latitude: number,
+    latitudeDelta: number,
+    longitude: number,
+    longitudeDelta: number,
+  };
+  nearbyStations: object[]| null;
+  selectedStation: object | null;
+  watchId: string | null;
+}
+
 // REDUCER
-const initialState = {
+const initialState: GeolocationState = {
+  direction: {
+    isGivingDirection: false,
+    latitude: 0,
+    longitude: 0,
+  },
   grantedPermission: false,
   location: {
     latitude: -42.983068,
-    longitude: -43.3614,
     latitudeDelta: 0.0122,
+    longitude: -43.3614,
     longitudeDelta: 0.0051,
-  },
-  direction: {
-    isGivingDirection: false,
-    latitude: null,
-    longitude: null,
   },
   nearbyStations: null,
   selectedStation: null,
   watchId: null,
 };
 
-export default (state = initialState, { type, payload }) => {
+export default (state = initialState, { type, payload }: Action) => {
   switch (type) {
     case GEOLOCATION_GRANT_PERMISSION:
       return { ...state, ...payload };
@@ -70,7 +95,7 @@ export default (state = initialState, { type, payload }) => {
 // ACTIONS
 
 export function geolocationGrantPermission() {
-  return async dispatch => {
+  return async (dispatch: Dispatch) => {
     const grantedPermission = await fineLocation();
     dispatch({
       type: GEOLOCATION_GRANT_PERMISSION,
@@ -81,16 +106,16 @@ export function geolocationGrantPermission() {
   };
 }
 
-export function geolocationStoreWatchId(watchId) {
-  return dispatch =>
+export function geolocationStoreWatchId(watchId: string) {
+  return (dispatch: Dispatch) =>
     dispatch({
       type: GEOLOCATION_STORE_WATCH_ID,
       payload: { watchId },
     });
 }
 
-export function geolocationClearWatch(watchId) {
-  return dispatch => {
+export function geolocationClearWatch(watchId: string) {
+  return (dispatch: Dispatch) => {
     Geolocation.clearWatch(watchId);
     Geolocation.stopObserving();
     dispatch({
@@ -100,10 +125,10 @@ export function geolocationClearWatch(watchId) {
   };
 }
 
-export function geolocationStorePosition(findStation) {
-  return dispatch => {
+export function geolocationStorePosition(findStation: () => void) {
+  return (dispatch: Dispatch) => {
     const watchId = Geolocation.watchPosition(
-      position => {
+      (position: any) => {
         dispatch({
           type: GEOLOCATION_STORE_POSITION,
           payload: {
@@ -125,8 +150,8 @@ export function geolocationStorePosition(findStation) {
   };
 }
 
-export function geolocationFindNearbyStations(latitude, longitude) {
-  return async dispatch => {
+export function geolocationFindNearbyStations(latitude: number, longitude: number) {
+  return async (dispatch: Dispatch) => {
     const url = urlFindNearbyStations(latitude, longitude);
     const response = await fetch(url);
     const data = await response.json();
@@ -140,8 +165,8 @@ export function geolocationFindNearbyStations(latitude, longitude) {
   };
 }
 
-export function geolocationSelectStation(station) {
-  return dispatch =>
+export function geolocationSelectStation(station: any) {
+  return (dispatch: Dispatch) =>
     dispatch({
       type: GEOLOCATION_SELECT_STATION,
       payload: {
@@ -155,7 +180,7 @@ export function geolocationSelectStation(station) {
 }
 
 export function geolocationCreateDirection() {
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     dispatch({
       type: GEOLOCATION_CREATE_DIRECTION,
       payload: { isGivingDirection: true },

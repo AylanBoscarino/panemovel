@@ -1,39 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component, ReactComponentElement, ComponentElement } from 'react';
 import {
-  Text,
-  StyleSheet,
-  View,
-  TouchableNativeFeedback,
   Image,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View,
 } from 'react-native';
 import ClosestStationContainer from './ClosestStationContainer';
 
 export interface Props {
   station: any;
-  onPress: Function;
-} 
-
-export interface State {
-
+  onPress: () => any;
 }
 
+export interface State {}
+
 export default class ClosestStation extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-  
-    this.state = {}
-  }
-  
-  render() {
+  public render() {
     const { station } = this.props;
     return (
       <ClosestStationContainer
-        station={station}
         photoReference={station.photos && station.photos[0].photo_reference}>
-        {(photo: string) => (
+        {(url: string): React.ReactNode => (
           <TouchableNativeFeedback onPress={() => this.props.onPress()}>
             <View style={styles.container}>
-              <Image style={styles.image} source={{ uri: photo }} />
+              <Image style={styles.image} source={{ uri: url }} />
               <View style={styles.textSpace}>
                 <Text> {station && station.name} </Text>
               </View>
