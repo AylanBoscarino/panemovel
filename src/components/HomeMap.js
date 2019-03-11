@@ -1,35 +1,53 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import MapViewDirections  from 'react-native-maps-directions';
 
 import MapContainer from './MapContainer';
 import PositionMarker from './PositionMarker';
 import LocationButton from './LocationButton';
 import StationMarker from './StationMarker';
 import ClosestStation from './ClosestStation';
-
+import MapDirections from './MapDirections';
 
 export default class HomeMap extends Component {
   render() {
     return (
       <MapContainer>
-        {(coordinates, nearbyStations, spotlightStation, changeSpotlightStation) => (
+        {(data, functions) => (
           <View style={styles.container}>
             <MapView
               style={styles.map}
               region={{
-                ...coordinates,
-                latitudeDelta: 0.0122,
-                longitudeDelta: 0.0121,
+                latitude: data.location.latitude,
+                longitude: data.location.longitude,
+                latitudeDelta: data.location.latitudeDelta,
+                longitudeDelta: data.location.longitudeDelta,
               }}>
-              <PositionMarker coordinate={coordinates} />
-              {nearbyStations && nearbyStations.map((station, index) => (
-                <StationMarker key={index} index={index} station={station} onPress={changeSpotlightStation}/>
-              ))}
+              <PositionMarker coordinate={data.location} />
+              {data.nearbyStations &&
+                data.nearbyStations.map((station, index) => (
+                  <StationMarker
+                    key={index}
+                    station={station}
+                    onPress={() => functions.selectStation(station)}
+                  />
+                ))}
+              <MapDirections
+                location={data.location}
+                direction={
+                  data.selectedStation && data.selectedStation.geometry.location
+                }
+                isGivingDirection={data.direction.isGivingDirection}
+              />
             </MapView>
-            <LocationButton style={styles.locationButton}/>
-            {nearbyStations && <ClosestStation station={nearbyStations[spotlightStation]} />}
+            <LocationButton style={styles.locationButton} />
+            {data.nearbyStations && (
+              <ClosestStation
+                station={data.selectedStation}
+                onPress={functions.createDirection}
+              />
+            )}
+            {console.log(data.direction.isGivingDirection)}
           </View>
         )}
       </MapContainer>

@@ -9,15 +9,14 @@ export default class StationMarker extends Component {
       latitude: station.geometry.location.lat,
       longitude: station.geometry.location.lng,
     };
-    console.log({station});
     return (
       <Marker
+        onPress={this.props.onPress}
         title={station.name}
         description={station.vicinity}
         flat={true}
         pinColor="purple"
         coordinate={location}
-        onPress={() => this.props.onPress(this.props.index)}
       />
     );
   }

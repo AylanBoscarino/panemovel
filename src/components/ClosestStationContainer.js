@@ -15,6 +15,14 @@ export default class ClosestStationContainer extends Component {
     this.setState({ url });
   };
 
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (this.props !== prevProps) {
+      const url = urlPlacePhotos(this.props.photoReference);
+
+      this.setState({ url });
+    }
+  };
+
   render() {
     const { children } = this.props;
     const { url } = this.state;

@@ -2,10 +2,11 @@ import { Navigation } from 'react-native-navigation';
 
 import HomeScreen from './HomeScreen';
 import ListStationsScreen from './ListStationsScreen';
+import provideRedux from '../redux/provideRedux';
 
 export default function registerNavigationStack() {
-  Navigation.registerComponent('HomeScreen', () => HomeScreen);
-  Navigation.registerComponent('ListStationsScreen', () => ListStationsScreen);
+  Navigation.registerComponent('HomeScreen', () => provideRedux(HomeScreen));
+  Navigation.registerComponent('ListStationsScreen', () => provideRedux(ListStationsScreen));
 
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
