@@ -3,27 +3,39 @@ import { Text, View } from 'react-native';
 
 import { urlPlacePhotos } from '../constants';
 
-export default class ClosestStationContainer extends Component {
-  state = {
-    photo: null,
-    url: null,
-  };
+export interface Props {
+  photoReference: () => void;
+  children: (url: string | null) => Component;
+}
 
-  componentDidMount = async () => {
+export interface State {
+  url: string | null;
+}
+
+export default class ClosestStationContainer extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      url: null,
+    };
+  }
+
+  public componentDidMount() {
     const url = urlPlacePhotos(this.props.photoReference);
 
     this.setState({ url });
-  };
+  }
 
-  componentDidUpdate = async (prevProps, prevState) => {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     if (this.props !== prevProps) {
       const url = urlPlacePhotos(this.props.photoReference);
 
       this.setState({ url });
     }
-  };
+  }
 
-  render() {
+  public render() {
     const { children } = this.props;
     const { url } = this.state;
     return children(url);
