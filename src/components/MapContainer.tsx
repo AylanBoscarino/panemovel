@@ -12,9 +12,13 @@ import {
   GeolocationState,
   geolocationStorePosition,
   geolocationStoreWatchId,
+  geolocationAlterMapPosition,
   Dispatch,
 } from '../redux/ducks/geolocation';
 import Loading from './Loading';
+import { StoreState, GooglePlacesStation, GeolocationStateProps } from '../contract/geolocation';
+import { LatLng } from 'react-native-maps';
+import { getCenterPosition } from '../service/geolocation';
 
 export interface OwnProps {
   children: (geolocation: GeolocationState, options: any) => React.ReactNode;
@@ -22,11 +26,27 @@ export interface OwnProps {
 
 export interface State {}
 
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = GeolocationStateProps & DispatchProps & OwnProps;
 
 class MapContainer extends Component<Props, State> {
-  public selectStation = (station: object) => {
+  centralize = (location: LatLng, direction: LatLng) => {
+    const centerPosition = getCenterPosition(location, direction);
+    this.props.geolocationAlterMapPosition(centerPosition);
+  };
+  
+  public selectStation = (station: GooglePlacesStation) => {
     this.props.geolocationSelectStation(station);
+
+    this.centralize(
+      {
+        latitude: this.props.geolocation.location.latitude,
+        longitude: this.props.geolocation.location.longitude,
+      },
+      {
+        latitude: this.props.geolocation.direction.latitude,
+        longitude: this.props.geolocation.direction.longitude,
+      }
+    );
   };
 
   public async componentDidMount() {
@@ -75,7 +95,7 @@ class MapContainer extends Component<Props, State> {
   }
 }
 
-function mapStateToProps(state: any): StateProps {
+function mapStateToProps(state: any): GeolocationStateProps {
   return {
     geolocation: state.geolocation,
   };
@@ -89,23 +109,23 @@ const mapDispatchToProps: DispatchProps = {
   geolocationSelectStation,
   geolocationStorePosition,
   geolocationStoreWatchId,
+  geolocationAlterMapPosition,
 };
 
-export default connect<StateProps, DispatchProps, OwnProps>(
+export default connect<GeolocationStateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps
 )(MapContainer);
 
-export interface StateProps {
-  geolocation: GeolocationState;
-}
+
 
 export interface DispatchProps {
-  geolocationGrantPermission: (param?: any) => any;
-  geolocationClearWatch: (param?: any) => any;
-  geolocationCreateDirection: (param?: any) => any;
-  geolocationFindNearbyStations: (param1: any, param2: any) => any;
-  geolocationSelectStation: (param?: any) => any;
-  geolocationStorePosition: (param?: any) => any;
-  geolocationStoreWatchId: (param?: any) => any;
+  geolocationGrantPermission: () => any;
+  geolocationClearWatch: (watchId: string) => any;
+  geolocationCreateDirection: () => any;
+  geolocationFindNearbyStations: (latitude: number, longitude: number) => any;
+  geolocationSelectStation: (station: GooglePlacesStation) => any;
+  geolocationStorePosition: (findStation: () => void) => any;
+  geolocationStoreWatchId: (watchId: string) => any;
+  geolocationAlterMapPosition: (coordinates: LatLng) => any;
 }

@@ -1,3 +1,9 @@
+import { GeolocationState } from "../redux/ducks/geolocation";
+
+export interface StoreState {
+  geolocation: GeolocationState;
+}
+
 export interface GooglePlacesStation {
   geometry: {
     location: {
@@ -33,4 +39,8 @@ export interface MapsLocation {
   longitude: number,
   latitudeDelta: number | null,
   longitudeDelta: number | null,
+}
+
+export interface GeolocationStateProps {
+  geolocation: GeolocationState;
 }

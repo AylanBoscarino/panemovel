@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import MapContainer from './MapContainer';
-import PositionMarker from './PositionMarker';
 import LocationButton from './LocationButton';
 import StationMarker from './StationMarker';
 import ClosestStation from './ClosestStation';
@@ -29,23 +28,20 @@ export default class HomeMap extends Component {
                 longitude: data.location.longitude,
                 latitudeDelta: data.location.latitudeDelta,
                 longitudeDelta: data.location.longitudeDelta,
-              }}>
-              <PositionMarker coordinate={data.location} />
+              }}
+              showsUserLocation={true}
+              showsMyLocationButton={true}>
               {data.nearbyStations &&
-                data.nearbyStations.map((station: GooglePlacesStation, index) => (
-                  <StationMarker
-                    key={index}
-                    station={station}
-                    onPress={() => functions.selectStation(station)}
-                  />
-                ))}
-              <MapDirections
-                location={data.location}
-                direction={
-                  data.selectedStation.geometry.location
-                }
-                isGivingDirection={data.direction.isGivingDirection}
-              />
+                data.nearbyStations.map(
+                  (station: GooglePlacesStation, index) => (
+                    <StationMarker
+                      key={index}
+                      station={station}
+                      onPress={() => functions.selectStation(station)}
+                    />
+                  )
+                )}
+              <MapDirections />
             </MapView>
             <LocationButton style={styles.locationButton} />
             {data.nearbyStations && (

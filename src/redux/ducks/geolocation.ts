@@ -4,7 +4,7 @@ import { urlFindNearbyStations } from '../../constants';
 import fineLocation from '../../permissions/fineLocation';
 import { GooglePlacesStation } from '../../contract/geolocation';
 import { MapsLocation } from '../../contract/geolocation';
-import { Region } from 'react-native-maps';
+import { Region, LatLng } from 'react-native-maps';
 
 // TYPES
 const GEOLOCATION_GRANT_PERMISSION = 'panemovel/geolocation/grant-permission';
@@ -15,6 +15,9 @@ const GEOLOCATION_FIND_NEARBY_STATIONS =
   'panemovel/geolocation/find-nearby-stations';
 const GEOLOCATION_SELECT_STATION = 'panemovel/geolocation/select-station';
 const GEOLOCATION_CREATE_DIRECTION = 'panemovel/geolocation/create-direction';
+const GEOLOCATION_ALTER_MAP_ZOOM = 'panemovel/geolocation/alter-map-zoom';
+const GEOLOCATION_ALTER_MAP_POSITION =
+  'panemovel/geolocation/alter-map-position';
 
 interface GeolocationAction {
   type: string;
@@ -48,7 +51,7 @@ const initialState: GeolocationState = {
     latitude: -42.983068,
     latitudeDelta: 0.0122,
     longitude: -43.3614,
-    longitudeDelta: 0.0351,
+    longitudeDelta: 0.0151,
   },
   nearbyStations: null,
   selectedStation: {
@@ -86,12 +89,33 @@ export default (state = initialState, { type, payload }: GeolocationAction) => {
         selectedStation: payload.selectedStation,
         direction: {
           ...state.direction,
+          ...state.direction,
           ...payload.direction,
         },
       };
 
     case GEOLOCATION_CREATE_DIRECTION:
       return { ...state, direction: { ...state.direction, ...payload } };
+
+    case GEOLOCATION_ALTER_MAP_ZOOM:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          ...payload,
+        },
+      };
+
+    case GEOLOCATION_ALTER_MAP_POSITION:
+      console.log({payload})
+      return {
+        ...state,
+        location: {
+          latitude: parseFloat(payload.latitude),
+          longitude: parseFloat(payload.longitude),
+          ...state.location,
+        },
+      };
 
     default:
       return state;
@@ -171,10 +195,11 @@ export function geolocationFindNearbyStations(
         selectedStation: data.results[0],
       },
     });
+    geolocationSelectStation(data.results[0])(dispatch);
   };
 }
 
-export function geolocationSelectStation(station: any) {
+export function geolocationSelectStation(station: GooglePlacesStation) {
   return (dispatch: Dispatch) =>
     dispatch({
       type: GEOLOCATION_SELECT_STATION,
@@ -193,6 +218,27 @@ export function geolocationCreateDirection() {
     dispatch({
       type: GEOLOCATION_CREATE_DIRECTION,
       payload: { isGivingDirection: true },
+    });
+  };
+}
+
+export function geolocationAlterMapZoom(start: LatLng, end: LatLng) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: GEOLOCATION_ALTER_MAP_ZOOM,
+      payload: {
+        latitudeDelta: Math.abs(start.latitude - end.latitude),
+        longitudeDelta: Math.abs(start.longitude - end.longitude),
+      },
+    });
+  };
+}
+
+export function geolocationAlterMapPosition(coordinates: LatLng) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: GEOLOCATION_ALTER_MAP_POSITION,
+      payload: coordinates,
     });
   };
 }
