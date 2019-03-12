@@ -11,7 +11,7 @@ export interface GooglePlacesStation {
   opening_hours?: {
     open_now: true;
   };
-  photos?: {
+  photos: {
     height: number;
     html_attributions: any[];
     photo_reference: string;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 import {
   geolocationClearWatch,
@@ -11,32 +12,22 @@ import {
   GeolocationState,
   geolocationStorePosition,
   geolocationStoreWatchId,
+  Dispatch,
 } from '../redux/ducks/geolocation';
 import Loading from './Loading';
 
-export interface Props {
-  children: (geolocation: GeolocationState, options: object) => React.ReactNode;
-  geolocationGrantPermission: () => void;
-  geolocationClearWatch: () => void;
-  geolocationCreateDirection: () => void;
-  geolocationFindNearbyStations: (
-    lat: number | null,
-    lng: number | null,
-  ) => void;
-  geolocationSelectStation: (station: object) => void;
-  geolocationStorePosition: (
-    param: (callback: (lat: number | null, lng: number | null) => void) => void
-  ) => void;
-  geolocationStoreWatchId: () => void;
-  geolocation: GeolocationState;
+export interface OwnProps {
+  children: (geolocation: GeolocationState, options: any) => React.ReactNode;
 }
 
 export interface State {}
 
+type Props = StateProps & DispatchProps & OwnProps;
+
 class MapContainer extends Component<Props, State> {
   public selectStation = (station: object) => {
     this.props.geolocationSelectStation(station);
-  }
+  };
 
   public async componentDidMount() {
     await this.props.geolocationGrantPermission();
@@ -51,12 +42,12 @@ class MapContainer extends Component<Props, State> {
   }
 
   public componentWillUnmount() {
-    this.props.geolocationClearWatch();
+    this.props.geolocationClearWatch(this.props.geolocation.watchId);
   }
 
   public createDirection = () => {
     this.props.geolocationCreateDirection();
-  }
+  };
 
   public render() {
     const { children } = this.props;
@@ -84,11 +75,13 @@ class MapContainer extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any): StateProps => ({
-  geolocation: state.geolocation,
-});
+function mapStateToProps(state: any): StateProps {
+  return {
+    geolocation: state.geolocation,
+  };
+}
 
-const mapDispatchToProps = {
+const mapDispatchToProps: DispatchProps = {
   geolocationClearWatch,
   geolocationCreateDirection,
   geolocationFindNearbyStations,
@@ -98,15 +91,21 @@ const mapDispatchToProps = {
   geolocationStoreWatchId,
 };
 
-export default connect<any, any, any>(
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(MapContainer);
 
 export interface StateProps {
-  geolocation: Geolocation
+  geolocation: GeolocationState;
 }
 
 export interface DispatchProps {
-
+  geolocationGrantPermission: (param?: any) => any;
+  geolocationClearWatch: (param?: any) => any;
+  geolocationCreateDirection: (param?: any) => any;
+  geolocationFindNearbyStations: (param1: any, param2: any) => any;
+  geolocationSelectStation: (param?: any) => any;
+  geolocationStorePosition: (param?: any) => any;
+  geolocationStoreWatchId: (param?: any) => any;
 }

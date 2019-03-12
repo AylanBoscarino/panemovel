@@ -7,10 +7,11 @@ import {
   View,
 } from 'react-native';
 import ClosestStationContainer from './ClosestStationContainer';
+import { GooglePlacesStation } from '../contract/geolocation';
 
 export interface Props {
-  station: any;
-  onPress: () => any;
+  station: GooglePlacesStation;
+  onPress: () => void;
 }
 
 export interface State {}
@@ -20,9 +21,10 @@ export default class ClosestStation extends Component<Props, State> {
     const { station } = this.props;
     return (
       <ClosestStationContainer
-        photoReference={station.photos && station.photos[0].photo_reference}>
+        photoReference={station.photos && station.photos[0].photo_reference}
+        >
         {(url: string): React.ReactNode => (
-          <TouchableNativeFeedback onPress={() => this.props.onPress()}>
+          <TouchableNativeFeedback onPress={this.props.onPress}>
             <View style={styles.container}>
               {url.length > 0 && <Image style={styles.image} source={{ uri: url }} /> }
               <View style={styles.textSpace}>

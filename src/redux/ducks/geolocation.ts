@@ -16,24 +16,24 @@ const GEOLOCATION_FIND_NEARBY_STATIONS =
 const GEOLOCATION_SELECT_STATION = 'panemovel/geolocation/select-station';
 const GEOLOCATION_CREATE_DIRECTION = 'panemovel/geolocation/create-direction';
 
-interface Action {
+interface GeolocationAction {
   type: string;
   payload: any;
 }
 
-type Dispatch = (action: Action) => void;
+export type Dispatch = (action: GeolocationAction) => void;
 
 export interface GeolocationState {
   direction: {
-    isGivingDirection: boolean,
-    latitude: number,
-    longitude: number,
+    isGivingDirection: boolean;
+    latitude: number;
+    longitude: number;
   };
   grantedPermission: boolean;
-  location: Region
+  location: Region;
   nearbyStations: GooglePlacesStation[] | null;
   selectedStation: GooglePlacesStation;
-  watchId: string | null;
+  watchId: string;
 }
 
 // REDUCER
@@ -48,7 +48,7 @@ const initialState: GeolocationState = {
     latitude: -42.983068,
     latitudeDelta: 0.0122,
     longitude: -43.3614,
-    longitudeDelta: 0.0051,
+    longitudeDelta: 0.0351,
   },
   nearbyStations: null,
   selectedStation: {
@@ -56,13 +56,14 @@ const initialState: GeolocationState = {
       location: {
         lat: 0,
         lng: 0,
-      }
-    }
+      },
+    },
+    photos: [],
   },
-  watchId: null,
+  watchId: '',
 };
 
-export default (state = initialState, { type, payload }: Action) => {
+export default (state = initialState, { type, payload }: GeolocationAction) => {
   switch (type) {
     case GEOLOCATION_GRANT_PERMISSION:
       return { ...state, ...payload };
@@ -120,7 +121,7 @@ export function geolocationStoreWatchId(watchId: string) {
 }
 
 export function geolocationClearWatch(watchId: string) {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch): void => {
     Geolocation.clearWatch(watchId);
     Geolocation.stopObserving();
     dispatch({
@@ -155,8 +156,11 @@ export function geolocationStorePosition(findStation: () => void) {
   };
 }
 
-export function geolocationFindNearbyStations(latitude: number, longitude: number) {
-  return async (dispatch: Dispatch) => {
+export function geolocationFindNearbyStations(
+  latitude: number,
+  longitude: number
+): (dispatch: Dispatch) => Promise<void> {
+  return async (dispatch: Dispatch): Promise<void> => {
     const url = urlFindNearbyStations(latitude, longitude);
     const response = await fetch(url);
     const data = await response.json();
