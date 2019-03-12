@@ -2,6 +2,9 @@ import Geolocation from 'react-native-geolocation-service';
 
 import { urlFindNearbyStations } from '../../constants';
 import fineLocation from '../../permissions/fineLocation';
+import { GooglePlacesStation } from '../../contract/geolocation';
+import { MapsLocation } from '../../contract/geolocation';
+import { Region } from 'react-native-maps';
 
 // TYPES
 const GEOLOCATION_GRANT_PERMISSION = 'panemovel/geolocation/grant-permission';
@@ -27,14 +30,9 @@ export interface GeolocationState {
     longitude: number,
   };
   grantedPermission: boolean;
-  location: {
-    latitude: number,
-    latitudeDelta: number,
-    longitude: number,
-    longitudeDelta: number,
-  };
-  nearbyStations: object[]| null;
-  selectedStation: object | null;
+  location: Region
+  nearbyStations: GooglePlacesStation[] | null;
+  selectedStation: GooglePlacesStation;
   watchId: string | null;
 }
 
@@ -53,7 +51,14 @@ const initialState: GeolocationState = {
     longitudeDelta: 0.0051,
   },
   nearbyStations: null,
-  selectedStation: null,
+  selectedStation: {
+    geometry: {
+      location: {
+        lat: 0,
+        lng: 0,
+      }
+    }
+  },
   watchId: null,
 };
 

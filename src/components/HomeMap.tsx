@@ -9,6 +9,7 @@ import StationMarker from './StationMarker';
 import ClosestStation from './ClosestStation';
 import MapDirections from './MapDirections';
 import { GeolocationState } from '../redux/ducks/geolocation';
+import { GooglePlacesStation } from '../contract/geolocation';
 
 export interface FunctionsObject {
   selectStation: (station: object) => void;
@@ -31,7 +32,7 @@ export default class HomeMap extends Component {
               }}>
               <PositionMarker coordinate={data.location} />
               {data.nearbyStations &&
-                data.nearbyStations.map((station, index) => (
+                data.nearbyStations.map((station: GooglePlacesStation, index) => (
                   <StationMarker
                     key={index}
                     station={station}
@@ -41,7 +42,7 @@ export default class HomeMap extends Component {
               <MapDirections
                 location={data.location}
                 direction={
-                  data.selectedStation && data.selectedStation.geometry.location
+                  data.selectedStation.geometry.location
                 }
                 isGivingDirection={data.direction.isGivingDirection}
               />
@@ -53,7 +54,6 @@ export default class HomeMap extends Component {
                 onPress={functions.createDirection}
               />
             )}
-            {console.log(data.direction.isGivingDirection)}
           </View>
         )}
       </MapContainer>

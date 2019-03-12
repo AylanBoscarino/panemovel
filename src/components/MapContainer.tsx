@@ -34,7 +34,7 @@ export interface Props {
 export interface State {}
 
 class MapContainer extends Component<Props, State> {
-  public selectStation(station: object) {
+  public selectStation = (station: object) => {
     this.props.geolocationSelectStation(station);
   }
 
@@ -54,7 +54,7 @@ class MapContainer extends Component<Props, State> {
     this.props.geolocationClearWatch();
   }
 
-  public createDirection() {
+  public createDirection = () => {
     this.props.geolocationCreateDirection();
   }
 
@@ -62,6 +62,7 @@ class MapContainer extends Component<Props, State> {
     const { children } = this.props;
     const { grantedPermission } = this.props.geolocation;
     const { selectStation, createDirection } = this;
+
     if (grantedPermission === true) {
       return children(this.props.geolocation, {
         selectStation,

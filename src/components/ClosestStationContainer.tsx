@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { urlPlacePhotos } from '../constants';
 
 export interface ClosestStationContainerProps {
-  photoReference: () => void;
+  photoReference: string;
   children: (url: string) => React.ReactNode;
 }
 

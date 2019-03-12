@@ -13,7 +13,10 @@
     "react-native-geolocation-service": "^2.0.0",
     "react-native-maps": "^0.23.0",
     "react-native-maps-directions": "^1.6.0",
-    "react-native-navigation": "^2.13.1"
+    "react-native-navigation": "^2.13.1",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.2",

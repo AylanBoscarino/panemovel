@@ -24,7 +24,7 @@ export default class ClosestStation extends Component<Props, State> {
         {(url: string): React.ReactNode => (
           <TouchableNativeFeedback onPress={() => this.props.onPress()}>
             <View style={styles.container}>
-              <Image style={styles.image} source={{ uri: url }} />
+              {url.length > 0 && <Image style={styles.image} source={{ uri: url }} /> }
               <View style={styles.textSpace}>
                 <Text> {station && station.name} </Text>
               </View>

@@ -8,7 +8,14 @@ import {
   Image,
 } from 'react-native';
 
-export default class RoundMapButton extends Component {
+export interface Props {
+  style: object;
+  image: any; 
+}
+
+export interface State {}
+
+export default class RoundMapButton extends Component<Props, State> {
   render() {
     return (
       <View style={{...styles.roundMapButton, ...this.props.style}} >

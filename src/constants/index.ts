@@ -10,7 +10,7 @@ export const constants = {
   PLACE_PHOTOS_URL: 'https://maps.googleapis.com/maps/api/place/photo?',
 };
 
-export function urlFindNearbyStations(latitude, longitude) {
+export function urlFindNearbyStations(latitude: number, longitude: number) {
   return (
     constants.NEARBY_SEARCH_URL +
     `&location=${latitude},${longitude}` +
@@ -20,7 +20,7 @@ export function urlFindNearbyStations(latitude, longitude) {
   );
 }
 
-export function urlPlacePhotos(photoReference) {
+export function urlPlacePhotos(photoReference: string) {
   return (
     constants.PLACE_PHOTOS_URL +
     `key=${constants.GOOGLE_MAPS_API_KEY}` +
