@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {
   GeolocationStateProps,
   GooglePlacesStation,
-  //   StoreState,
 } from '../contract/geolocation';
 
 import { geolocationClearWatch } from '../redux/ducks/geolocation';

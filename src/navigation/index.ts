@@ -12,9 +12,11 @@ export default function registerNavigationStack() {
     Navigation.setRoot({
       root: {
         bottomTabs: {
+          id: 'BottomTabs',
           children: [
             {
               component: {
+                id: 'map',
                 name: 'HomeScreen',
                 options: {
                   bottomTab: {
@@ -26,6 +28,7 @@ export default function registerNavigationStack() {
             },
             {
               component: {
+                id: 'list',
                 name: 'ListStationsScreen',
                 options: {
                   bottomTab: {

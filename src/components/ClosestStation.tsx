@@ -29,10 +29,10 @@ export default class ClosestStation extends Component<Props, State> {
         {(url: string, distance: number): React.ReactNode => (
           <TouchableNativeFeedback onPress={this.props.onPress}>
             <View style={styles.container}>
-            <View style={styles.avatar}>
-              {url.length > 0 && (
-                <Image style={styles.image} source={{ uri: url }} />
-              )}
+              <View style={styles.avatar}>
+                {url.length > 0 && (
+                  <Image style={styles.image} source={{ uri: url }} />
+                )}
               </View>
 
               <View style={styles.textSpace}>
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    height: 70,
+    height: 80,
     backgroundColor: '#fff',
-    top: '89%',
+    top: '87%',
     flex: 1,
     flexDirection: 'row',
     borderRadius: 10,

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { GooglePlacesStation } from '../contract/geolocation';
 import { urlPlacePhotos } from '../constants';
+import { Navigation } from 'react-native-navigation';
 
 interface Props {
   station: GooglePlacesStation;
@@ -35,7 +36,17 @@ export default class StationListItem extends Component<Props, State> {
     const { station } = this.props;
     const { url } = this.state;
     return (
-      <TouchableNativeFeedback>
+      <TouchableNativeFeedback
+        onPress={() => {
+          setTimeout(() => {
+            Navigation.mergeOptions('BottomTabs', {
+              bottomTabs: {
+                currentTabId: 'map',
+              }
+            })
+          },.1);
+        }}
+      >
         <View style={styles.container}>
           {url && <Image style={styles.image} source={{ uri: url }} />}
           <View style={styles.textSpace}>
@@ -49,14 +60,10 @@ export default class StationListItem extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'absolute',
     width: '100%',
     height: 60,
     backgroundColor: '#fff',
-    // top: '90%',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
     borderRadius: 10,
     shadowColor: '#000',
