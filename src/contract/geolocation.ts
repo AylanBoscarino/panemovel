@@ -12,7 +12,7 @@ export interface GooglePlacesStation {
     };
   };
   icon?: string;
-  id?: string;
+  id: string;
   name?: string;
   opening_hours?: {
     open_now: true;
