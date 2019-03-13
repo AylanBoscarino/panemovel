@@ -12,7 +12,6 @@ import {
   geolocationStorePosition,
   geolocationStoreWatchId,
   geolocationAlterMapPosition,
-  Dispatch,
 } from '../redux/ducks/geolocation';
 import Loading from './Loading';
 import {

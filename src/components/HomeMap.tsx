@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Callout } from 'react-native-maps';
 
 import MapContainer from './MapContainer';
 import LocationButton from './LocationButton';
@@ -16,13 +16,29 @@ export interface FunctionsObject {
 }
 
 export default class HomeMap extends Component {
+  state = {
+    map: {
+      ...StyleSheet.absoluteFillObject,
+      flex: 1,
+    },
+  }
+
+  _onMapReady = () => {
+    this.setState({
+      map: {
+        ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        marginBottom: 1,
+      },
+    })
+  }
   render() {
     return (
       <MapContainer>
         {(data: GeolocationState, functions: FunctionsObject) => (
           <View style={styles.container}>
             <MapView
-              style={styles.map}
+              style={this.state.map}
               initialRegion={{
                 latitude: data.location.latitude,
                 longitude: data.location.longitude,
@@ -30,7 +46,9 @@ export default class HomeMap extends Component {
                 longitudeDelta: data.location.longitudeDelta,
               }}
               showsUserLocation={true}
-              showsMyLocationButton={true}>
+              showsMyLocationButton={true}
+              onMapReady={this._onMapReady}
+              >
               {data.nearbyStations &&
                 data.nearbyStations.map(
                   (station: GooglePlacesStation, index) => (
@@ -42,14 +60,15 @@ export default class HomeMap extends Component {
                   )
                 )}
               <MapDirections />
+            
             </MapView>
-            <LocationButton style={styles.locationButton} />
-            {data.nearbyStations && (
+            {/* <LocationButton style={styles.locationButton} /> */}
+              {data.nearbyStations && (
               <ClosestStation
                 station={data.selectedStation}
                 onPress={functions.createDirection}
-              />
-            )}
+              /> 
+            )} 
           </View>
         )}
       </MapContainer>
@@ -66,6 +85,7 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+    flex: 1,
   },
   locationButton: {
     position: 'absolute',

@@ -18,6 +18,8 @@ const GEOLOCATION_CREATE_DIRECTION = 'panemovel/geolocation/create-direction';
 const GEOLOCATION_ALTER_MAP_ZOOM = 'panemovel/geolocation/alter-map-zoom';
 const GEOLOCATION_ALTER_MAP_POSITION =
   'panemovel/geolocation/alter-map-position';
+const GEOLOCATION_DISTANCE_FROM_STATION =
+  'panemovel/geolocation/distance-from-station';
 
 interface GeolocationAction {
   type: string;
@@ -31,6 +33,7 @@ export interface GeolocationState {
     isGivingDirection: boolean;
     latitude: number;
     longitude: number;
+    distance: number;
   };
   grantedPermission: boolean;
   location: Region;
@@ -42,9 +45,10 @@ export interface GeolocationState {
 // REDUCER
 const initialState: GeolocationState = {
   direction: {
-    isGivingDirection: false,
+    isGivingDirection: true,
     latitude: 0,
     longitude: 0,
+    distance: 0,
   },
   grantedPermission: false,
   location: {
@@ -108,13 +112,22 @@ export default (state = initialState, { type, payload }: GeolocationAction) => {
       };
 
     case GEOLOCATION_ALTER_MAP_POSITION:
-      console.log({payload})
+      console.log({ payload });
       return {
         ...state,
         location: {
           latitude: parseFloat(payload.latitude),
           longitude: parseFloat(payload.longitude),
           ...state.location,
+        },
+      };
+
+    case GEOLOCATION_DISTANCE_FROM_STATION:
+      return {
+        ...state,
+        direction: {
+          ...state.direction,
+          distance: payload,
         },
       };
 
@@ -187,7 +200,6 @@ export function geolocationFindNearbyStations(
 ): (dispatch: Dispatch) => Promise<void> {
   return async (dispatch: Dispatch): Promise<void> => {
     const url = urlFindNearbyStations(latitude, longitude);
-    console.log({url})
     const response = await fetch(url);
     const data = await response.json();
     dispatch({
@@ -241,6 +253,15 @@ export function geolocationAlterMapPosition(coordinates: LatLng) {
     dispatch({
       type: GEOLOCATION_ALTER_MAP_POSITION,
       payload: coordinates,
+    });
+  };
+}
+
+export function geolocationDistanceFromStation(distance: number) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: GEOLOCATION_DISTANCE_FROM_STATION,
+      payload: distance,
     });
   };
 }

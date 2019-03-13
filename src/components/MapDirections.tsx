@@ -18,7 +18,7 @@ export default class MapDirections extends Component<Props, State> {
   render() {
     return (
       <DirectionsContainer>
-        {(location: LatLng, destination: LatLng, isGivingDirection: boolean) =>
+        {(location: LatLng, destination: LatLng, isGivingDirection: boolean, distanceFromStation: (distance: number) => any) =>
           isGivingDirection && (
             <MapViewDirections
               strokeWidth={3}
@@ -27,6 +27,7 @@ export default class MapDirections extends Component<Props, State> {
               language="pt-BR"
               destination={destination}
               apikey={constants.GOOGLE_MAPS_API_KEY}
+              onReady={({distance}: {distance: number}) => distanceFromStation(distance)}
             />
           )
         }

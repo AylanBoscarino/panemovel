@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { Marker } from 'react-native-maps';
+import { Marker, Callout } from 'react-native-maps';
 import { GooglePlacesStation } from '..//contract/geolocation';
 
 export interface Props {
@@ -8,9 +8,7 @@ export interface Props {
   onPress: () => void;
 }
 
-export interface State {
-
-}
+export interface State {}
 
 export default class StationMarker extends Component<Props, State> {
   render() {
@@ -22,12 +20,11 @@ export default class StationMarker extends Component<Props, State> {
     return (
       <Marker
         onPress={this.props.onPress}
-        title={station.name}
-        description={station.vicinity}
         flat={true}
         pinColor="purple"
-        coordinate={location}
-      />
+
+        coordinate={location}>
+      </Marker>
     );
   }
 }

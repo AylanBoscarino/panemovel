@@ -1,4 +1,8 @@
-import React, { Component, ReactComponentElement, ComponentElement } from 'react';
+import React, {
+  Component,
+  ReactComponentElement,
+  ComponentElement,
+} from 'react';
 import {
   Image,
   StyleSheet,
@@ -21,14 +25,26 @@ export default class ClosestStation extends Component<Props, State> {
     const { station } = this.props;
     return (
       <ClosestStationContainer
-        photoReference={station.photos && station.photos[0].photo_reference}
-        >
-        {(url: string): React.ReactNode => (
+        photoReference={station.photos && station.photos[0].photo_reference}>
+        {(url: string, distance: number): React.ReactNode => (
           <TouchableNativeFeedback onPress={this.props.onPress}>
             <View style={styles.container}>
-              {url.length > 0 && <Image style={styles.image} source={{ uri: url }} /> }
+            <View style={styles.avatar}>
+              {url.length > 0 && (
+                <Image style={styles.image} source={{ uri: url }} />
+              )}
+              </View>
+
               <View style={styles.textSpace}>
-                <Text> {station && station.name} </Text>
+                <Text style={styles.stationName}>
+                  {station && station.name}
+                </Text>
+                <Text style={styles.stationAddress}>
+                  {station && station.vicinity}
+                </Text>
+                <Text style={styles.stationAddress}>
+                  {station && `${distance} Km`}
+                </Text>
               </View>
             </View>
           </TouchableNativeFeedback>
@@ -42,9 +58,9 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    height: 50,
+    height: 70,
     backgroundColor: '#fff',
-    top: '90%',
+    top: '89%',
     flex: 1,
     flexDirection: 'row',
     borderRadius: 10,
@@ -59,8 +75,22 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   textSpace: {
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     flex: 1,
+    flexDirection: 'column',
+  },
+  stationName: {
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  avatar: {
+    width: 52,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  stationAddress: {
+    textAlign: 'center',
   },
 });

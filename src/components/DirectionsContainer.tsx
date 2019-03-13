@@ -6,6 +6,7 @@ import { LatLng } from 'react-native-maps';
 import {
   geolocationAlterMapZoom,
   geolocationAlterMapPosition,
+  geolocationDistanceFromStation,
 } from '../redux/ducks/geolocation';
 import { GeolocationState } from '../redux/ducks/geolocation';
 import { StoreState, GeolocationStateProps } from '../contract/geolocation';
@@ -15,7 +16,8 @@ export interface OwnProps {
   children: (
     location: LatLng,
     destination: LatLng,
-    isGivingDirection: boolean
+    isGivingDirection: boolean,
+    geolocationDistanceFromStation: (distance: number) => any,
   ) => React.ReactNode;
 }
 
@@ -24,6 +26,7 @@ export interface State {}
 export interface DispatchProps {
   geolocationAlterMapZoom: (start: LatLng, end: LatLng) => any;
   geolocationAlterMapPosition: (coordinates: LatLng) => any;
+  geolocationDistanceFromStation: (discante: number) => any;
 }
 
 type Props = GeolocationStateProps & DispatchProps & OwnProps;
@@ -32,10 +35,10 @@ class DirectionsContainer extends Component<Props, State> {
 
 
   render() {
-    const { children } = this.props;
+    const { children, geolocationDistanceFromStation } = this.props;
     const { location, direction } = this.props.geolocation;
 
-    return children(location, direction, direction.isGivingDirection);
+    return children(location, direction, direction.isGivingDirection, geolocationDistanceFromStation);
   }
 }
 
@@ -46,6 +49,7 @@ const mapStateToProps = (state: StoreState): GeolocationStateProps => ({
 const mapDispatchToProps: DispatchProps = {
   geolocationAlterMapZoom,
   geolocationAlterMapPosition,
+  geolocationDistanceFromStation,
 };
 
 export default connect(
