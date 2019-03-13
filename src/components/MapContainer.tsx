@@ -15,7 +15,11 @@ import {
   Dispatch,
 } from '../redux/ducks/geolocation';
 import Loading from './Loading';
-import { StoreState, GooglePlacesStation, GeolocationStateProps } from '../contract/geolocation';
+import {
+  StoreState,
+  GooglePlacesStation,
+  GeolocationStateProps,
+} from '../contract/geolocation';
 import { LatLng } from 'react-native-maps';
 import { getCenterPosition } from '../service/geolocation';
 
@@ -32,7 +36,7 @@ class MapContainer extends Component<Props, State> {
     const centerPosition = getCenterPosition(location, direction);
     this.props.geolocationAlterMapPosition(centerPosition);
   };
-  
+
   public selectStation = (station: GooglePlacesStation) => {
     this.props.geolocationSelectStation(station);
 
@@ -73,7 +77,7 @@ class MapContainer extends Component<Props, State> {
     const { grantedPermission } = this.props.geolocation;
     const { selectStation, createDirection } = this;
 
-    if (grantedPermission === true) {
+    if (grantedPermission === true && this.props.geolocation.nearbyStations) {
       return children(this.props.geolocation, {
         selectStation,
         createDirection,
@@ -88,9 +92,7 @@ class MapContainer extends Component<Props, State> {
       );
     }
 
-    if (grantedPermission === undefined) {
-      return <Loading />;
-    }
+    return <Loading />;
   }
 }
 
@@ -115,8 +117,6 @@ export default connect<GeolocationStateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps
 )(MapContainer);
-
-
 
 export interface DispatchProps {
   geolocationGrantPermission: () => any;

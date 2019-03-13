@@ -23,7 +23,7 @@ export default class HomeMap extends Component {
           <View style={styles.container}>
             <MapView
               style={styles.map}
-              region={{
+              initialRegion={{
                 latitude: data.location.latitude,
                 longitude: data.location.longitude,
                 latitudeDelta: data.location.latitudeDelta,
