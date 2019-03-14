@@ -12,7 +12,7 @@ const GEOLOCATION_STORE_POSITION = 'panemovel/geolocation/store-position';
 const GEOLOCATION_STORE_WATCH_ID = 'panemovel/geolocation/store-watch-id';
 const GEOLOCATION_CLEAR_WATCH = 'panemovel/geolocation/clear-watch';
 const GEOLOCATION_FIND_NEARBY_STATIONS =
-  'panemovel/geolocation/find-nearby-stations';
+  'panemovel/geolocation/find-nearby-stations'; 
 const GEOLOCATION_SELECT_STATION = 'panemovel/geolocation/select-station';
 const GEOLOCATION_CREATE_DIRECTION = 'panemovel/geolocation/create-direction';
 const GEOLOCATION_ALTER_MAP_ZOOM = 'panemovel/geolocation/alter-map-zoom';
