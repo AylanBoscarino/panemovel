@@ -7,11 +7,12 @@ import {
   Image,
   StyleSheet,
   Text,
-  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import ClosestStationContainer from './ClosestStationContainer';
 import { GooglePlacesStation } from '../contract/geolocation';
+import { primary, secondary, text } from '../constants/colors';
 
 export interface Props {
   station: GooglePlacesStation;
@@ -27,7 +28,7 @@ export default class ClosestStation extends Component<Props, State> {
       <ClosestStationContainer
         photoReference={station.photos && station.photos[0].photo_reference}>
         {(url: string, distance: number): React.ReactNode => (
-          <TouchableNativeFeedback onPress={this.props.onPress}>
+          <TouchableWithoutFeedback onPress={this.props.onPress}>
             <View style={styles.container}>
               <View style={styles.avatar}>
                 {url.length > 0 && (
@@ -47,7 +48,7 @@ export default class ClosestStation extends Component<Props, State> {
                 </Text>
               </View>
             </View>
-          </TouchableNativeFeedback>
+          </TouchableWithoutFeedback>
         )}
       </ClosestStationContainer>
     );
@@ -57,17 +58,25 @@ export default class ClosestStation extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    width: '100%',
-    height: 80,
-    backgroundColor: '#fff',
-    top: '87%',
+    width: '85%',
+    padding: 2,
+    height: 85,
+    backgroundColor: secondary.light,
+    top: '80%',
     flex: 1,
     flexDirection: 'row',
+    borderWidth: 1,
     borderRadius: 10,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
-    shadowRadius: 10,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
   },
   image: {
     width: 50,
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
   },
   stationName: {
     fontWeight: 'bold',
-    color: 'black',
+    color: text.label,
   },
   avatar: {
     width: 52,
@@ -92,5 +101,6 @@ const styles = StyleSheet.create({
   },
   stationAddress: {
     textAlign: 'center',
+    color: text.content,
   },
 });

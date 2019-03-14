@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import StationList from '../components/StationList';
 import { Navigation, Options } from 'react-native-navigation';
+import { primary } from '../constants/colors';
 
 export default class ListStations extends Component {
   constructor(props: any) {
@@ -14,8 +15,13 @@ export default class ListStations extends Component {
       topBar: {
         title: {
           text: 'Postos mais perto',
-          alignment: 'fill'
+          color: '#fff',
+          fontFamily: 'roboto',
+          fontSize: 24,
         },
+        background: {
+          color: primary.main,
+        }
       },
     };
   }

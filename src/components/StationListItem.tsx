@@ -9,6 +9,7 @@ import {
 import { GooglePlacesStation } from '../contract/geolocation';
 import { urlPlacePhotos } from '../constants';
 import { Navigation } from 'react-native-navigation';
+import { secondary, primary, text } from '../constants/colors';
 
 interface Props {
   station: GooglePlacesStation;
@@ -63,10 +64,11 @@ export default class StationListItem extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 60,
+    height: 70,
     backgroundColor: '#fff',
     flex: 1,
     flexDirection: 'row',
+    paddingTop: 10,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -82,5 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    borderBottomColor: text.content,
+    borderBottomWidth: .3,
   },
 });
