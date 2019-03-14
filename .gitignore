@@ -58,3 +58,4 @@ buck-out/
 
 # Environment variables
 .env
+android/gradle.properties
