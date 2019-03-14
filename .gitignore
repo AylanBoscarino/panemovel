@@ -57,4 +57,4 @@ buck-out/
 *.jsbundle
 
 # Environment variables
-./.env
+/.env
