@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import StationList from '../components/StationList';
+import { Navigation, Options } from 'react-native-navigation';
 
 export default class ListStations extends Component {
+  constructor(props: any) {
+    super(props)
+    Navigation.events().bindComponent(this, 'list');
+  }
+  
+  static options(props: any): Options {
+    return {
+      topBar: {
+        title: {
+          text: 'Postos mais perto',
+          alignment: 'fill'
+        },
+      },
+    };
+  }
   render() {
     return (
       <View style={styles.container}>

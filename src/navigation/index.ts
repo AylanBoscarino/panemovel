@@ -6,7 +6,9 @@ import provideRedux from '../redux/provideRedux';
 
 export default function registerNavigationStack() {
   Navigation.registerComponent('HomeScreen', () => provideRedux(HomeScreen));
-  Navigation.registerComponent('ListStationsScreen', () => provideRedux(ListStationsScreen));
+  Navigation.registerComponent('ListStationsScreen', () =>
+    provideRedux(ListStationsScreen)
+  );
 
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
@@ -27,15 +29,21 @@ export default function registerNavigationStack() {
               },
             },
             {
-              component: {
-                id: 'list',
-                name: 'ListStationsScreen',
-                options: {
-                  bottomTab: {
-                    text: 'Lista de Postos',
-                    icon: require('../../asstes/list.png'),
+              stack: {
+                children: [
+                  {
+                    component: {
+                      id: 'list',
+                      name: 'ListStationsScreen',
+                      options: {
+                        bottomTab: {
+                          text: 'Lista de Postos',
+                          icon: require('../../asstes/list.png'),
+                        },
+                      },
+                    },
                   },
-                },
+                ],
               },
             },
           ],

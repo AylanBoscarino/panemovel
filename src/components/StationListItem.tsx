@@ -12,6 +12,7 @@ import { Navigation } from 'react-native-navigation';
 
 interface Props {
   station: GooglePlacesStation;
+  selectStation: (station: GooglePlacesStation) => any;
 }
 
 interface State {
@@ -20,8 +21,8 @@ interface State {
 
 export default class StationListItem extends Component<Props, State> {
   state = {
-    url : null
-  }
+    url: null,
+  };
   componentDidMount() {
     const { station } = this.props;
     const photoReference = station.photos && station.photos[0].photo_reference;
@@ -32,21 +33,22 @@ export default class StationListItem extends Component<Props, State> {
     });
   }
 
+  _onPress = (event: any) => {
+    this.props.selectStation(this.props.station);
+    setTimeout(() => {
+      Navigation.mergeOptions('BottomTabs', {
+        bottomTabs: {
+          currentTabId: 'map',
+        },
+      });
+    }, 200);
+  };
+
   render() {
     const { station } = this.props;
     const { url } = this.state;
     return (
-      <TouchableNativeFeedback
-        onPress={() => {
-          setTimeout(() => {
-            Navigation.mergeOptions('BottomTabs', {
-              bottomTabs: {
-                currentTabId: 'map',
-              }
-            })
-          },.1);
-        }}
-      >
+      <TouchableNativeFeedback onPress={this._onPress}>
         <View style={styles.container}>
           {url && <Image style={styles.image} source={{ uri: url }} />}
           <View style={styles.textSpace}>

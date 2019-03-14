@@ -38,17 +38,6 @@ class MapContainer extends Component<Props, State> {
 
   public selectStation = (station: GooglePlacesStation) => {
     this.props.geolocationSelectStation(station);
-
-    this.centralize(
-      {
-        latitude: this.props.geolocation.location.latitude,
-        longitude: this.props.geolocation.location.longitude,
-      },
-      {
-        latitude: this.props.geolocation.direction.latitude,
-        longitude: this.props.geolocation.direction.longitude,
-      }
-    );
   };
 
   public async componentDidMount() {

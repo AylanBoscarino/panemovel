@@ -3,8 +3,9 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-export default function (WrapedComponent: typeof React.Component) {
-  return class extends React.Component {
+export default function (WrapedComponent: any) {
+  class HoC extends React.Component {
+    static options(props: any) {}
     render() {
       return (
         <Provider store={store}>
@@ -13,4 +14,6 @@ export default function (WrapedComponent: typeof React.Component) {
       );
     }
   };
+  HoC.options = WrapedComponent.options;
+  return HoC;
 }

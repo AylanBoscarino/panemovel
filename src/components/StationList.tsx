@@ -9,13 +9,16 @@ export default class StationList extends Component {
   render() {
     return (
       <StationListContainer>
-        {(nearbyStations: GooglePlacesStation[]) => (
+        {(
+          nearbyStations: GooglePlacesStation[],
+          selectStation: (station: GooglePlacesStation) => any
+        ) => (
           <FlatList
             ListEmptyComponent={() => <StationListPlaceholder />}
             style={styles.container}
             data={nearbyStations}
             renderItem={({ item }: { item: GooglePlacesStation }) => (
-              <StationListItem station={item} />
+              <StationListItem station={item} selectStation={selectStation} />
             )}
             keyExtractor={(item: GooglePlacesStation) => item.id}
           />
@@ -29,5 +32,6 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
+    paddingTop: 3
   },
 });

@@ -37,7 +37,6 @@ class DirectionsContainer extends Component<Props, State> {
   render() {
     const { children, geolocationDistanceFromStation } = this.props;
     const { location, direction } = this.props.geolocation;
-
     return children(location, direction, direction.isGivingDirection, geolocationDistanceFromStation);
   }
 }

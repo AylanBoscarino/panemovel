@@ -7,14 +7,18 @@ import {
   GooglePlacesStation,
 } from '../contract/geolocation';
 
-import { geolocationClearWatch } from '../redux/ducks/geolocation';
+import {
+  geolocationClearWatch,
+  geolocationSelectStation,
+} from '../redux/ducks/geolocation';
 
 export interface State {}
 
-
-
 export interface OwnProps {
-  children: (nearbyStations: GooglePlacesStation[]) => React.ReactNode;
+  children: (
+    nearbyStations: GooglePlacesStation[],
+    geolocationSelectStation: (station: GooglePlacesStation) => any
+  ) => React.ReactNode;
 }
 
 type Props = GeolocationStateProps & DispatchProps & OwnProps;
@@ -22,7 +26,10 @@ type Props = GeolocationStateProps & DispatchProps & OwnProps;
 class StationListContainer extends Component<Props, State> {
   render() {
     const { nearbyStations } = this.props.geolocation;
-    return nearbyStations && this.props.children(nearbyStations);
+    return (
+      nearbyStations &&
+      this.props.children(nearbyStations, this.props.geolocationSelectStation)
+    );
   }
 }
 
@@ -34,6 +41,7 @@ function mapStateToProps(state: any): GeolocationStateProps {
 
 const mapDispatchToProps: DispatchProps = {
   geolocationClearWatch,
+  geolocationSelectStation,
 };
 
 export default connect<GeolocationStateProps, DispatchProps, OwnProps>(
@@ -43,4 +51,5 @@ export default connect<GeolocationStateProps, DispatchProps, OwnProps>(
 
 export interface DispatchProps {
   geolocationClearWatch: (v?: any) => any;
+  geolocationSelectStation: (station: GooglePlacesStation) => any;
 }
