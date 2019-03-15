@@ -11,6 +11,7 @@ import {
   geolocationClearWatch,
   geolocationSelectStation,
 } from '../redux/ducks/geolocation';
+import Loading from './Loading';
 
 export interface State {}
 
@@ -26,10 +27,12 @@ type Props = GeolocationStateProps & DispatchProps & OwnProps;
 class StationListContainer extends Component<Props, State> {
   render() {
     const { nearbyStations } = this.props.geolocation;
-    return (
-      nearbyStations &&
-      this.props.children(nearbyStations, this.props.geolocationSelectStation)
-    );
+
+    if (nearbyStations) {
+      return this.props.children(nearbyStations, this.props.geolocationSelectStation);
+    }
+
+    return <Loading />;
   }
 }
 

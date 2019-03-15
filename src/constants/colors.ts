@@ -13,4 +13,5 @@ export const secondary = {
 export const text = {
   label: '#37474f',
   content: '#546e7a',
+  attibution: '#e5e5e5',
 }

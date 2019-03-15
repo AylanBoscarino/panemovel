@@ -106,6 +106,16 @@ android {
         versionName "1.0"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
     }
+    signingConfigs {
+        release {
+            if(project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(project.env.get("MYAPP_RELEASE_STORE_FILE"))
+                storePassword project.env.get("MYAPP_RELEASE_STORE_PASSWORD")
+                keyAlias project.env.get("MYAPP_RELEASE_KEY_ALIAS")
+                keyPassword project.env.get("MYAPP_RELEASE_KEY_PASSWORD")
+            }
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -118,17 +128,6 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a"
         }
     }
-    signingConfigs {
-        release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
-            }
-        }
-    }
-    
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
