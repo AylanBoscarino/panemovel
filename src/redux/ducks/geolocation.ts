@@ -200,6 +200,7 @@ export function geolocationFindNearbyStations(
 ): (dispatch: Dispatch) => Promise<void> {
   return async (dispatch: Dispatch): Promise<void> => {
     const url = urlFindNearbyStations(latitude, longitude);
+    console.log(url)
     const response = await fetch(url);
     const data = await response.json();
     dispatch({

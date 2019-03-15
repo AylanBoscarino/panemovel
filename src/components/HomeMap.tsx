@@ -62,7 +62,6 @@ export default class HomeMap extends Component {
               <MapDirections />
             
             </MapView>
-            {/* <LocationButton style={styles.locationButton} /> */}
               {data.nearbyStations && (
               <ClosestStation
                 station={data.selectedStation}

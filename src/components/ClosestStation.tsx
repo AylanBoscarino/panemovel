@@ -13,6 +13,7 @@ import {
 import ClosestStationContainer from './ClosestStationContainer';
 import { GooglePlacesStation } from '../contract/geolocation';
 import { primary, secondary, text } from '../constants/colors';
+import Avatar from './Avatar';
 
 export interface Props {
   station: GooglePlacesStation;
@@ -30,12 +31,7 @@ export default class ClosestStation extends Component<Props, State> {
         {(url: string, distance: number): React.ReactNode => (
           <TouchableWithoutFeedback onPress={this.props.onPress}>
             <View style={styles.container}>
-              <View style={styles.avatar}>
-                {url.length > 0 && (
-                  <Image style={styles.image} source={{ uri: url }} />
-                )}
-              </View>
-
+              <Avatar url={url} name={station.name} />
               <View style={styles.textSpace}>
                 <Text style={styles.stationName}>
                   {station && station.name}
