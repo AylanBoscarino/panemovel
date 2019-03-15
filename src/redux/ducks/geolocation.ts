@@ -37,7 +37,7 @@ export interface GeolocationState {
   };
   grantedPermission: boolean;
   location: Region;
-  nearbyStations: GooglePlacesStation[] | null;
+  nearbyStations: GooglePlacesStation[];
   selectedStation: GooglePlacesStation;
   watchId: string;
 }
@@ -57,7 +57,7 @@ const initialState: GeolocationState = {
     longitude: -43.3614,
     longitudeDelta: 0.0151,
   },
-  nearbyStations: null,
+  nearbyStations: [],
   selectedStation: {
     id: '',
     geometry: {

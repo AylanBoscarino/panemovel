@@ -27,7 +27,7 @@ type Props = GeolocationStateProps & DispatchProps & OwnProps;
 class StationListContainer extends Component<Props, State> {
   render() {
     const { nearbyStations } = this.props.geolocation;
-
+    console.log({nearbyStations})
     if (nearbyStations) {
       return this.props.children(nearbyStations, this.props.geolocationSelectStation);
     }

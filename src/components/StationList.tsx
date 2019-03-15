@@ -4,6 +4,7 @@ import StationListContainer from './StationListContainer';
 import { GooglePlacesStation } from '../contract/geolocation';
 import StationListItem from './StationListItem';
 import StationListPlaceholder from './StationListPlaceholder';
+import Loading from './Loading';
 
 export default class StationList extends Component {
   render() {
@@ -14,7 +15,11 @@ export default class StationList extends Component {
           selectStation: (station: GooglePlacesStation) => any
         ) => (
           <FlatList
-            ListEmptyComponent={() => <StationListPlaceholder />}
+            ListEmptyComponent={() => (
+              <View style={styles.loading}>
+                <Loading />
+              </View>
+            )}
             style={styles.container}
             data={nearbyStations}
             renderItem={({ item }: { item: GooglePlacesStation }) => (
@@ -34,4 +39,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 3
   },
+  loading: {
+    flex: 1,
+    width: '100%',
+    height: 500,
+  }
 });

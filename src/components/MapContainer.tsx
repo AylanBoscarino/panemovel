@@ -65,7 +65,7 @@ class MapContainer extends Component<Props, State> {
     const { grantedPermission } = this.props.geolocation;
     const { selectStation, createDirection } = this;
 
-    if (grantedPermission === true && this.props.geolocation.nearbyStations) {
+    if (grantedPermission === true && this.props.geolocation.nearbyStations.length > 0) {
       return children(this.props.geolocation, {
         selectStation,
         createDirection,
