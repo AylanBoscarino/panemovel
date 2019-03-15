@@ -28,7 +28,8 @@ export default class StationListItem extends Component<Props, State> {
   componentDidMount() {
     const { station } = this.props;
     const photoReference = station.photos && station.photos[0].photo_reference;
-    const url = urlPlacePhotos(photoReference);
+    // const url = urlPlacePhotos(photoReference);
+    const url = 'PLACEHOLDER';
 
     this.setState({
       url,
