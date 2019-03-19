@@ -16,6 +16,7 @@ export default function registerNavigationStack() {
       root: {
         bottomTabs: {
           options: {
+            
 
             bottomTabs: {
               // background: {
@@ -36,6 +37,9 @@ export default function registerNavigationStack() {
                 id: 'map',
                 name: 'HomeScreen',
                 options: {
+                  statusBar: {
+                    backgroundColor: primary.dark,
+                  },
                   bottomTab: {
                     text: 'Página Inicial',
                     icon: require('../../asstes/map.png'),
@@ -56,6 +60,9 @@ export default function registerNavigationStack() {
                       id: 'list',
                       name: 'ListStationsScreen',
                       options: {
+                        statusBar: {
+                          backgroundColor: primary.dark,
+                        },
                         bottomTab: {
                           text: 'Lista de Postos',
                           icon: require('../../asstes/list.png'),

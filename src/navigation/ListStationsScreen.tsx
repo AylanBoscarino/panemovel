@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, StatusBar } from 'react-native';
 import StationList from '../components/StationList';
 import { Navigation, Options } from 'react-native-navigation';
 import { primary } from '../constants/colors';
@@ -40,5 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: '#fff'
   },
 });

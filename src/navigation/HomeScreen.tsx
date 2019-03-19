@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, StatusBar } from 'react-native';
 
 import HomeMap from '../components/HomeMap';
+import { primary } from '../constants/colors';
 
 export default class HomeScreen extends Component {
   render() {

@@ -55,7 +55,7 @@ export default class StationListItem extends Component<Props, State> {
         <View style={styles.container}>
           <View style={styles.avatarContainer}><Avatar url={url} name={station.name}/></View>
           <View style={styles.textSpace}>
-            <Text> {station.name}</Text>
+            <Text style={styles.stationName}>{station.name}</Text>
           </View>
         </View>
       </TouchableNativeFeedback>
@@ -86,14 +86,22 @@ const styles = StyleSheet.create({
   },
   textSpace: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flex: 1,
     borderBottomColor: text.content,
     borderBottomWidth: .3,
-  },
+  }, 
   avatarContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    width: 50,
+    height: 50,
+    marginTop: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  stationName: {
+    fontSize: 18,
+    color: 'black'
   }
 });

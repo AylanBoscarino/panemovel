@@ -17,10 +17,10 @@ export default class Avatar extends Component<Props, State> {
     imageWorks: false,
   };
   async componentDidMount() {
-    const response = await fetch(this.props.url);
-    this.setState({
-      imageWorks: response.status === 200,
-    });
+    // const response = await fetch(this.props.url);
+    // this.setState({
+    //   imageWorks: response.status === 200,
+    // });
   }
   render() {
     const { url, name } = this.props;
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: primary.dark,
+    backgroundColor: 'purple',
     justifyContent: 'center',
     alignItems: 'center',
   },
