@@ -102,7 +102,7 @@ android {
         applicationId "com.panemovel"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
     }
