@@ -41,7 +41,7 @@
   ```
   Caso tenha dúvidas sobre como gerar uma chave assinada consulte a [documentação oficial](https://facebook.github.io/react-native/docs/signed-apk-android#docsNav).
 
-  Com tudo configurado basta conectar seu dispositivo Android, seja em um aparelho físico ou um emulador, e rodar o seguitne comando:
+  Com tudo configurado basta conectar seu dispositivo Android, seja em um aparelho físico ou um emulador, e rodar o seguinte comando:
   ```console
   react-native run-android
   ```
